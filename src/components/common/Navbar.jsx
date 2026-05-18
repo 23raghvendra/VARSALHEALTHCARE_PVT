@@ -127,7 +127,7 @@ const Navbar = () => {
               <Button 
                 variant="ghost" 
                 size="sm"
-                className="p-2" 
+                className="p-2 text-black hover:text-varsal-darkblue hover:bg-gray-50 rounded-lg transition-colors" 
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Menu"
               >
