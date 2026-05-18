@@ -3,6 +3,21 @@ import Footer from "@/components/common/Footer";
 import PageHeader from "@/components/common/PageHeader";
 import FoundersSection from "@/components/sections/investors/FoundersSection";
 
+export const metadata = {
+  title: 'Investor Relations',
+  description: 'Access Varsal Healthcare investor information including financial reports, shareholder details, and company leadership. Explore investment opportunities in healthcare innovation.',
+  keywords: ['investor relations', 'Varsal Healthcare investors', 'healthcare investment', 'shareholder information', 'company founders'],
+  openGraph: {
+    title: 'Investor Relations - Varsal Healthcare',
+    description: 'Financial information, leadership team, and investment opportunities at Varsal Healthcare.',
+    url: '/investors',
+    type: 'website',
+  },
+  alternates: {
+    canonical: '/investors',
+  },
+}
+
 export default function Investors() {
   return (
     <div className="flex flex-col min-h-screen">

@@ -2,8 +2,8 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Menu, X, Search, ArrowRight } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import { Menu, X, Search, ArrowRight, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMobile } from "@/hooks/use-mobile";
 import Image from "next/image";
@@ -15,18 +15,27 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchSuggestions, setSearchSuggestions] = useState([]);
+  const [scrolled, setScrolled] = useState(false);
   const searchInputRef = useRef(null);
   const isMobile = useMobile();
   const router = useRouter();
+  const pathname = usePathname();
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
     { href: "/products", label: "Products" },
     { href: "/investors", label: "Investors" },
-    { href: "/careers", label: "Careers" },
     { href: "/contact", label: "Contact Us" },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     if (showSearch && searchInputRef.current) {
@@ -63,147 +72,190 @@ const Navbar = () => {
   };
 
   return (
-    <header className="fixed w-full bg-white shadow-sm z-50">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="flex items-center">
+    <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-2' : 'bg-white backdrop-blur-sm shadow-sm py-3'}`}>
+      <div className="container mx-auto px-4 flex items-center justify-between">
+        <Link href="/" className="flex items-center group">
           <Image 
             src={logo} 
             alt="Varsal Healthcare Logo" 
             width={120}
             height={56}
-            className="h-12 md:h-14 w-auto"
+            className="h-12 md:h-14 w-auto transition-transform group-hover:scale-105"
             priority
           />
         </Link>
 
-        <nav className="hidden md:flex items-center space-x-8">
-          {navLinks.map((link) => (
-            <Link 
-              key={link.href}
-              href={link.href} 
-              className="text-gray-800 hover:text-varsal-darkblue font-medium transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
-          <button 
-            onClick={() => setShowSearch(true)} 
-            className="text-gray-600 hover:text-varsal-darkblue transition-colors"
-            aria-label="Search"
-          >
-            <Search size={20} />
-          </button>
-        </nav>
+        {!showSearch ? (
+          <>
+            <nav className="hidden lg:flex items-center space-x-1 animate-fade-in">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link 
+                    key={link.href}
+                    href={link.href} 
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 relative group ${
+                      isActive 
+                        ? 'text-varsal-darkblue bg-varsal-light' 
+                        : 'text-gray-700 hover:text-varsal-darkblue hover:bg-gray-50'
+                    }`}
+                  >
+                    {link.label}
+                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-varsal-lightblue transform origin-left transition-transform duration-200 ${
+                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                    }`}></span>
+                  </Link>
+                );
+              })}
+              <button 
+                onClick={() => setShowSearch(true)} 
+                className="ml-2 p-2 rounded-lg text-gray-600 hover:text-varsal-darkblue hover:bg-gray-50 transition-all duration-200"
+                aria-label="Search"
+              >
+                <Search size={20} />
+              </button>
+            </nav>
 
-        <div className="flex items-center md:hidden">
-          <button 
-            onClick={() => setShowSearch(true)} 
-            className="text-gray-600 hover:text-varsal-darkblue mr-4 transition-colors"
-            aria-label="Search"
-          >
-            <Search size={20} />
-          </button>
-          <Button 
-            variant="ghost" 
-            className="md:hidden" 
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
-        </div>
+            <div className="flex items-center lg:hidden animate-fade-in">
+              <button 
+                onClick={() => setShowSearch(true)} 
+                className="p-2 rounded-lg text-gray-600 hover:text-varsal-darkblue hover:bg-gray-50 mr-2 transition-colors"
+                aria-label="Search"
+              >
+                <Search size={20} />
+              </button>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                className="p-2" 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Menu"
+              >
+                {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              </Button>
+            </div>
+          </>
+        ) : (
+          <div className="flex-1 ml-4 lg:ml-12 relative flex items-center justify-end h-12 md:h-14 animate-fade-in">
+            <div className="relative w-full max-w-md">
+              <form onSubmit={handleSearchSubmit} className="relative w-full h-10 md:h-11 flex items-center bg-gray-50 rounded-full border border-gray-200 px-4 focus-within:ring-2 focus-within:ring-varsal-lightblue focus-within:border-varsal-lightblue transition-all shadow-sm">
+                <Search size={18} className="text-gray-400 min-w-[18px]" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  placeholder="Search products, categories..."
+                  className="w-full bg-transparent border-none focus:outline-none px-3 text-sm md:text-base text-gray-800 placeholder:text-gray-400"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery("")}
+                    className="text-gray-400 hover:text-gray-600 p-1 mr-1 transition-colors"
+                    aria-label="Clear input"
+                  >
+                    <X size={14} />
+                  </button>
+                )}
+                <div className="h-5 w-px bg-gray-200 mx-1"></div>
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setShowSearch(false);
+                    setSearchQuery("");
+                  }}
+                  className="text-gray-500 hover:text-gray-800 p-1.5 ml-1 rounded-full hover:bg-gray-200 transition-colors"
+                  aria-label="Close search"
+                >
+                  <X size={18} />
+                </button>
+              </form>
+
+              {searchQuery && (
+                <div className="absolute top-[calc(100%+12px)] left-0 w-full bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden z-50 max-h-[70vh] flex flex-col animate-slide-up">
+                  {searchSuggestions.length > 0 ? (
+                    <div className="flex flex-col overflow-hidden">
+                      <div className="px-5 py-3 bg-gray-50 border-b flex-shrink-0">
+                        <p className="text-sm font-medium text-gray-600">
+                          {searchSuggestions.length} {searchSuggestions.length === 1 ? 'Result' : 'Results'} Found
+                        </p>
+                      </div>
+                      <div className="overflow-y-auto flex-1 p-2">
+                        {searchSuggestions.map(suggestion => (
+                          <div 
+                            key={suggestion.id}
+                            className="p-3 hover:bg-blue-50 rounded-lg cursor-pointer transition-all duration-200 mb-1 group"
+                            onClick={() => handleSuggestionClick(suggestion.url)}
+                          >
+                            <div className="flex justify-between items-start gap-3">
+                              <div className="flex-1">
+                                <h3 className="font-semibold text-gray-900 group-hover:text-varsal-blue transition-colors text-sm md:text-base">
+                                  {suggestion.title}
+                                </h3>
+                                <p className="text-xs md:text-sm text-gray-600 line-clamp-1 mt-0.5">{suggestion.description}</p>
+                              </div>
+                              <span className="text-[10px] md:text-xs px-2 py-1 bg-varsal-light text-varsal-darkblue rounded-full font-medium whitespace-nowrap border border-blue-100 mt-0.5">
+                                {suggestion.category}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="px-5 py-3 flex justify-between items-center bg-gray-50 border-t flex-shrink-0">
+                        <p className="text-xs text-gray-500">Press Enter for all results</p>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="h-8 text-xs text-varsal-darkblue hover:text-varsal-blue hover:bg-varsal-light font-medium"
+                          onClick={handleSearchSubmit}
+                        >
+                          View All <ArrowRight size={14} className="ml-1" />
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-8 md:p-12 text-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <Search className="w-5 h-5 text-gray-400" />
+                      </div>
+                      <p className="text-gray-700 font-medium text-sm md:text-base mb-1">No results found</p>
+                      <p className="text-xs md:text-sm text-gray-500">Try searching with different keywords</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t">
-          <div className="container mx-auto px-4 py-2 flex flex-col">
-            {navLinks.map((link) => (
+      {/* Mobile Menu */}
+      <div 
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen && !showSearch ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="container mx-auto px-4 py-4 space-y-1 bg-white border-t">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
               <Link 
                 key={link.href}
                 href={link.href} 
-                className="py-3 text-gray-800 hover:text-varsal-darkblue font-medium"
+                className={`block px-4 py-3 rounded-lg font-medium transition-colors ${
+                  isActive 
+                    ? 'text-varsal-darkblue bg-varsal-light' 
+                    : 'text-gray-700 hover:text-varsal-darkblue hover:bg-gray-50'
+                }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
               </Link>
-            ))}
-          </div>
+            );
+          })}
         </div>
-      )}
-
-      {showSearch && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-start justify-center pt-20 px-4">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl overflow-hidden">
-            <div className="relative">
-              <form onSubmit={handleSearchSubmit}>
-                <input
-                  ref={searchInputRef}
-                  type="text"
-                  placeholder="Search..."
-                  className="w-full py-4 px-12 text-lg focus:outline-none"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <Search size={20} className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
-                <button 
-                  type="button" 
-                  onClick={() => setShowSearch(false)}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                >
-                  <X size={20} />
-                </button>
-              </form>
-            </div>
-            
-            {searchQuery && (
-              <div className="border-t">
-                {searchSuggestions.length > 0 ? (
-                  <div>
-                    <div className="p-2">
-                      <p className="text-sm text-gray-500 px-2 py-1">Suggested Results</p>
-                    </div>
-                    <div className="max-h-80 overflow-y-auto">
-                      {searchSuggestions.map(suggestion => (
-                        <div 
-                          key={suggestion.id}
-                          className="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors border-b border-gray-100"
-                          onClick={() => handleSuggestionClick(suggestion.url)}
-                        >
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <h3 className="font-medium text-gray-900">{suggestion.title}</h3>
-                              <p className="text-sm text-gray-600 mt-1 line-clamp-1">{suggestion.description}</p>
-                            </div>
-                            <span className="text-xs px-2 py-1 bg-gray-100 rounded-full text-gray-600">
-                              {suggestion.category}
-                            </span>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="p-4 flex justify-between items-center bg-gray-50">
-                      <p className="text-sm text-gray-500">Press Enter to see all results</p>
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="text-varsal-darkblue hover:text-varsal-blue flex items-center"
-                        onClick={handleSearchSubmit}
-                      >
-                        View all results <ArrowRight size={14} className="ml-1" />
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="p-4 text-center">
-                    <p className="text-sm text-gray-500">No results found for &quot;{searchQuery}&quot;</p>
-                    <p className="text-xs text-gray-400 mt-1">Try with a different search term</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      </div>
     </header>
   );
 };

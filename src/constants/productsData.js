@@ -1,85 +1,211 @@
 import gynoimg from "@/Assets/Product/gyno.jpeg";
 import orthoimg from "@/Assets/Product/orthopedic.jpeg";
 import surimg from "@/Assets/Product/surgical.jpeg";
+import pediaimg from "@/Assets/Product/ZUMOCEF-CV.jpg";
+import cpimg from "@/Assets/Product/EFFLUX-D.jpg";
+import opthoimg from "@/Assets/Product/VAR-CMC.jpg";
+import entimg from "@/Assets/Product/ZUMOCEF.jpg";
+import tbChestimg from "@/Assets/Product/VARMONT-L.jpg";
+import gpimg from "@/Assets/Product/ZIAPREX.jpg";
+
+const searchLink = (medicineName) =>
+  `https://www.1mg.com/search/all?name=${encodeURIComponent(medicineName)}`;
+
+const makeMedicines = (names) =>
+  names.map((name) => ({
+    name,
+    link: searchLink(name),
+  }));
 
 export const products = [
   {
     id: 1,
-    name: "Gynecology",
-    category: "Diagnostic Equipment",
-    description: "Advanced diagnostic tool for comprehensive health monitoring with real-time data analysis and cloud integration.",
+    name: "Ortho",
+    category: "Orthopedics",
+    description: "Orthopedic-focused product range supporting pain management, mobility, and recovery in musculoskeletal care.",
     benefits: [
-      "Accurate vital sign monitoring",
-      "Early disease detection",
-      "User-friendly interface",
-      "Remote monitoring capabilities"
+      "Supports joint and muscle pain management",
+      "Improves post-injury and post-op recovery support",
+      "Suitable for routine orthopedic prescriptions",
+      "Aligned with clinician-first treatment workflows"
     ],
-    image: gynoimg,
-    medicines: [
-      { name: "Irofes-XT", link: "https://www.1mg.com/otc/irofes-xt-tablet-otc962108" },
-      { name: "Ehuca-D3", link: "https://www.1mg.com/drugs/ehuca-d3-tablet-965125" },
-      { name: "Efflux-D", link: "https://www.1mg.com/drugs/efflux-d-capsule-pr-964391" },
-      { name: "Efflux 40", link: "https://www.1mg.com/drugs/efflux-40-tablet-962103" },
-      { name: "Lycosal", link: "https://www.1mg.com/otc/lycosal-tablet-otc962436" },
-      { name: "Itravar", link: "https://www.1mg.com/marketer/varsal-healthcare-pvt-ltd-90027?srsltid=AfmBOoqxUJd9tZk0RJNaojjBPga5CFLX-NId6I6BGzfTNlOQXPzhZwF8" },
-      { name: "Q-Jest", link: "https://www.1mg.com/marketer/varsal-healthcare-pvt-ltd-90027?srsltid=AfmBOoqxUJd9tZk0RJNaojjBPga5CFLX-NId6I6BGzfTNlOQXPzhZwF8" },
-    ]
+    image: orthoimg,
+    medicines: makeMedicines([
+      "EHUCA-Nano/60k",
+      "EHUCA-D3",
+      "VARFAST-OD",
+      "Varfast LC",
+      "VARCORT-6",
+      "VXROL GEL",
+      "Varace-P/SP",
+      "EFFLUX-D",
+    ]),
   },
   {
     id: 2,
-    name: "Orthopedic",
-    category: "Patient Management",
-    description: "Comprehensive patient management system for healthcare facilities, streamlining administrative processes and enhancing care delivery.",
+    name: "Gyne",
+    category: "Gynecology",
+    description: "Women-focused formulations designed for nutritional support, hormonal balance, and gynecological care continuity.",
     benefits: [
-      "Efficient patient record management",
-      "Appointment scheduling",
-      "Medication tracking",
-      "Seamless integration with existing systems"
+      "Supports everyday gyne practice needs",
+      "Balanced portfolio for varied patient profiles",
+      "Helps improve treatment adherence",
+      "Reliable options for OPD prescribing"
     ],
-    image: orthoimg,
-    medicines: [
-      { name: "Ehuca-D3", link: "https://www.1mg.com/drugs/ehuca-d3-tablet-965125" },
-      { name: "Efflux-D", link: "https://www.1mg.com/drugs/efflux-d-capsule-pr-964391" },
-      { name: "Varace-SP", link: "https://www.1mg.com/drugs/varace-sp-tablet-962125" },
-      { name: "Varace-P", link: "https://www.1mg.com/drugs/varace-p-tablet-962122" },
-      { name: "Varfast-OD", link: "https://www.1mg.com/drugs/varfast-od-tablet-962132" },
-      { name: "Vxrol", link: "https://www.1mg.com/drugs/vxrol-gel-962138" },
-    ]
+    image: gynoimg,
+    medicines: makeMedicines([
+      "Q-Jest",
+      "EHUCA-Nano/60k",
+      "EHUCA-D3",
+      "Varpol-G2",
+      "IROFES-XT",
+      "Ze-21Sy/Tab",
+      "ZIAPREX-O",
+      "OFLAVAR-O",
+      "EFFLUX-D",
+    ]),
   },
   {
     id: 3,
-    name: "NeuroCare Solutions",
-    category: "Therapeutic Devices",
-    description: "Advanced neurological care devices designed to aid in rehabilitation and management of neurological conditions.",
+    name: "Pedia",
+    category: "Pediatrics",
+    description: "Pediatric-oriented products developed to support age-appropriate care and safe clinical decision making.",
     benefits: [
-      "Personalized therapy programs",
-      "Progress tracking",
-      "Non-invasive treatment options",
-      "Clinically proven results"
+      "Supports common pediatric therapeutic needs",
+      "Useful range for child-focused consultations",
+      "Designed for practical prescribing",
+      "Helps maintain continuity in pediatric care"
     ],
-    image: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?auto=format&fit=crop&q=80&w=800",
-    medicines: [
-      { name: "Varfast-OD", link: "https://www.1mg.com/drugs/varfast-od-tablet-962132" },
-      { name: "Efflux-D", link: "https://www.1mg.com/drugs/efflux-d-capsule-pr-964391" },
-    ]
+    image: pediaimg,
+    medicines: makeMedicines([
+      "Varpol-G2",
+      "EHUCA-Nano",
+      "Ze-21sy",
+      "Zumocef-100/200",
+      "ZIAPREX-100/200",
+    ]),
   },
   {
     id: 4,
-    name: "Surgical",
-    category: "Telehealth",
-    description: "Secure telehealth platform connecting patients with healthcare providers for virtual consultations and remote care management.",
+    name: "CP",
+    category: "General Practice",
+    description: "Comprehensive multi-therapy portfolio for broad outpatient requirements across common day-to-day conditions.",
     benefits: [
-      "HIPAA-compliant video conferencing",
-      "Electronic prescriptions",
-      "Integrated health records",
-      "Mobile accessibility"
+      "Wide spectrum support for mixed case loads",
+      "Reduces need for multiple disconnected brands",
+      "Improves convenience in family practice",
+      "Flexible options across symptomatic presentations"
     ],
-    image: surimg,
-    medicines: [
-      { name: "Irofes-XT", link: "https://www.1mg.com/otc/irofes-xt-tablet-otc962108" },
-      { name: "Ziaprex 100", link: "https://www.1mg.com/drugs/ziaprex-100-tablet-964127" },
-      { name: "Ziaprex-O", link: "https://www.1mg.com/drugs/ziaprex-o-tablet-964128" },
-    ]
+    image: cpimg,
+    medicines: makeMedicines([
+      "EFFLUX-D",
+      "EHUCA-Nano/60k",
+      "Varpol-G2",
+      "Zumocef-CV/100/200",
+      "VARMONT-L",
+      "Aziprex-500",
+      "ZIAPREX-O/100/200",
+      "VARFAST-OD",
+      "Varfast LC",
+      "Oflavar-O",
+      "Vxrol",
+      "Itravar",
+      "Ze-21 Tab",
+    ]),
+  },
+  {
+    id: 5,
+    name: "Optho",
+    category: "Ophthalmology",
+    description: "Eye-care centered combinations curated to support symptomatic relief and comprehensive ophthalmic practice needs.",
+    benefits: [
+      "Supports common ophthalmic treatment plans",
+      "Useful mix of anti-inflammatory and supportive therapies",
+      "Suitable for routine follow-up and OPD usage",
+      "Helps streamline eye-care prescriptions"
+    ],
+    image: opthoimg,
+    medicines: makeMedicines([
+      "VAR-CMC",
+      "VARCORT-6",
+      "Ze-21Sy/Tab",
+      "VARMONT-L",
+      "Varace-P/SP",
+      "ZIAPREX-O/100/200",
+      "EFFLUX-D",
+    ]),
+  },
+  {
+    id: 6,
+    name: "Ent",
+    category: "ENT",
+    description: "Focused ENT product mix aimed at infection, inflammation, and respiratory-allergic support in everyday practice.",
+    benefits: [
+      "Supports upper respiratory and ENT symptom management",
+      "Useful for seasonal and recurrent case patterns",
+      "Balanced options for physician-led treatment",
+      "Efficient set for outpatient consultation"
+    ],
+    image: entimg,
+    medicines: makeMedicines([
+      "Zumocef-CV/100/200",
+      "VARMONT-L",
+      "Aziprex-500",
+      "VARCORT-6",
+      "EFFLUX-D",
+    ]),
+  },
+  {
+    id: 7,
+    name: "TB & Chest",
+    category: "Pulmonology",
+    description: "Chest and respiratory supportive range built for physicians managing complex respiratory symptom profiles.",
+    benefits: [
+      "Supports respiratory case management",
+      "Useful in infection and inflammation-focused plans",
+      "Broad options for chest physician needs",
+      "Helps in continuity of respiratory care"
+    ],
+    image: tbChestimg,
+    medicines: makeMedicines([
+      "Zumocef-CV/100/200",
+      "VARMONT-L",
+      "Aziprex-500",
+      "VARCORT-6",
+      "ZIAPREX-O/100/200",
+      "Ze-21Sy/Tab",
+      "EFFLUX-D",
+      "IROFES-XT",
+    ]),
+  },
+  {
+    id: 8,
+    name: "GP",
+    category: "General Physician",
+    description: "Extensive general physician portfolio designed for broad OPD coverage across frequently encountered conditions.",
+    benefits: [
+      "Covers diverse day-to-day GP needs",
+      "Supports treatment flexibility in mixed patient groups",
+      "Optimized for practical OPD prescribing",
+      "Reduces complexity with a unified product basket"
+    ],
+    image: gpimg,
+    medicines: makeMedicines([
+      "EFFLUX-D",
+      "EHUCA-Nano/60k",
+      "Varpol-G2",
+      "Zumocef-CV/100/200",
+      "VARMONT-L",
+      "Aziprex-500",
+      "ZIAPREX-O/100/200",
+      "VARFAST-OD",
+      "Varfast LC",
+      "Oflavar-O",
+      "Vxrol",
+      "IROFES-XT",
+      "Itravar",
+      "Varace-P/SP",
+    ]),
   },
 ];
 

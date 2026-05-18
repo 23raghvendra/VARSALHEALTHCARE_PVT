@@ -1,72 +1,87 @@
+import Image from "next/image";
+import { Shield, Zap, Award, Heart, Users, Star } from "lucide-react";
+
 export default function ValuesSection() {
+  const values = [
+    {
+      icon: Shield,
+      title: "Integrity",
+      description: "We uphold the highest ethical standards in all our operations, ensuring transparency, honesty, and accountability in everything we do.",
+      image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80",
+      alt: "Team standing together to represent integrity"
+    },
+    {
+      icon: Zap,
+      title: "Innovation",
+      description: "We constantly push the boundaries of what's possible in healthcare, investing in research and development to create groundbreaking solutions.",
+      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1920&q=80",
+      alt: "Doctor reviewing digital healthcare innovation"
+    },
+    {
+      icon: Award,
+      title: "Quality",
+      description: "We are committed to delivering products and services of the highest quality, ensuring safety and efficacy for all our customers.",
+      image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1920&q=80",
+      alt: "Healthcare professionals representing quality standards"
+    },
+    {
+      icon: Heart,
+      title: "Compassion",
+      description: "We approach healthcare with empathy, understanding that behind every product is a patient whose life we aim to improve.",
+      image: "https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1920&q=80",
+      alt: "Compassionate healthcare environment"
+    },
+    {
+      icon: Star,
+      title: "Excellence",
+      description: "We strive for the highest standards in everything we do, from product development to customer service and beyond.",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1920&q=80",
+      alt: "Professional team reflecting excellence"
+    },
+    {
+      icon: Users,
+      title: "Collaboration",
+      description: "We believe in the power of partnership, working together with healthcare professionals and communities to achieve better outcomes.",
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1920&q=80",
+      alt: "Group collaboration in a healthcare setting"
+    }
+  ];
+
   return (
-    <section id="values" className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-varsal-darkblue mb-6 text-center">Our Core Values</h2>
-        <div className="w-20 h-1 bg-varsal-lightblue mx-auto mb-12"></div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-lg shadow-sm transition-transform hover:-translate-y-1 duration-300">
-            <div className="w-16 h-16 bg-varsal-light flex items-center justify-center rounded-full mb-6 mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-varsal-darkblue">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+    <section id="values" className="bg-black">
+      {values.map((value, index) => {
+        const Icon = value.icon;
+        return (
+          <article key={value.title} className="relative min-h-screen flex items-center overflow-hidden">
+            <Image
+              src={value.image}
+              alt={value.alt}
+              fill
+              className="object-cover"
+              quality={75}
+              sizes="100vw"
+            />
+
+            <div className="absolute inset-0 bg-black/50"></div>
+
+            <div className="relative z-10 container mx-auto flex min-h-screen items-center px-4 py-16">
+              <div className="w-full max-w-4xl rounded-2xl border border-white/25 bg-black/30 p-6 text-center text-white backdrop-blur-sm md:p-10">
+                <span className="inline-flex items-center rounded-full border border-white/40 bg-white/10 px-4 py-2 text-sm font-semibold tracking-wide uppercase">
+                  {index === 0 ? "Our Core Values" : `Core Value ${index + 1}`}
+                </span>
+
+                <h2 className="mb-5 text-4xl font-bold leading-tight md:text-5xl lg:text-6xl">
+                  {value.title}
+                </h2>
+
+                <p className="mx-auto max-w-2xl text-base leading-relaxed text-white/90 md:text-xl">
+                  {value.description}
+                </p>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-varsal-darkblue">Integrity</h3>
-            <p className="text-gray-600 text-center">
-              We uphold the highest ethical standards in all our operations, ensuring transparency, honesty, and accountability in everything we do.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm transition-transform hover:-translate-y-1 duration-300">
-            <div className="w-16 h-16 bg-varsal-light flex items-center justify-center rounded-full mb-6 mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-varsal-darkblue">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-varsal-darkblue">Innovation</h3>
-            <p className="text-gray-600 text-center">
-              We constantly push the boundaries of what&apos;s possible in healthcare, investing in research and development to create groundbreaking solutions.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm transition-transform hover:-translate-y-1 duration-300">
-            <div className="w-16 h-16 bg-varsal-light flex items-center justify-center rounded-full mb-6 mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-varsal-darkblue">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-varsal-darkblue">Quality</h3>
-            <p className="text-gray-600 text-center">
-              We are committed to delivering products and services of the highest quality, ensuring safety and efficacy for all our customers.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm transition-transform hover:-translate-y-1 duration-300 md:col-start-1 md:col-end-2">
-            <div className="w-16 h-16 bg-varsal-light flex items-center justify-center rounded-full mb-6 mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-varsal-darkblue">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-varsal-darkblue">Compassion</h3>
-            <p className="text-gray-600 text-center">
-              We approach healthcare with empathy, understanding that behind every product is a patient whose life we aim to improve.
-            </p>
-          </div>
-          
-          <div className="bg-white p-8 rounded-lg shadow-sm transition-transform hover:-translate-y-1 duration-300 md:col-start-2 md:col-end-3">
-            <div className="w-16 h-16 bg-varsal-light flex items-center justify-center rounded-full mb-6 mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-8 h-8 text-varsal-darkblue">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-              </svg>
-            </div>
-            <h3 className="text-xl font-bold mb-3 text-center text-varsal-darkblue">Excellence</h3>
-            <p className="text-gray-600 text-center">
-              We strive for the highest standards in everything we do, from product development to customer service and beyond.
-            </p>
-          </div>
-        </div>
-      </div>
+          </article>
+        );
+      })}
     </section>
   );
 }
