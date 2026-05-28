@@ -100,3 +100,31 @@ export function BreadcrumbSchema({ items }) {
     />
   )
 }
+
+export function ProductSchema({ name, description, image, brand = 'Varsal Healthcare', category }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    image,
+    brand: {
+      '@type': 'Brand',
+      name: brand
+    },
+    category,
+    offers: {
+      '@type': 'Offer',
+      url: 'https://varsalhealthcare.com/contact',
+      price: '0',
+      priceCurrency: 'INR'
+    }
+  }
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  )
+}

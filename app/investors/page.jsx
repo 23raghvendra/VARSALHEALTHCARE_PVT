@@ -2,6 +2,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import PageHeader from "@/components/common/PageHeader";
 import FoundersSection from "@/components/sections/investors/FoundersSection";
+import { BreadcrumbSchema } from "@/components/common/JsonLd";
 
 export const metadata = {
   title: 'Investor Relations',
@@ -19,8 +20,14 @@ export const metadata = {
 }
 
 export default function Investors() {
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://varsalhealthcare.com' },
+    { name: 'Investors', url: 'https://varsalhealthcare.com/investors' }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <BreadcrumbSchema items={breadcrumbItems} />
       <Navbar />
       <div className="flex-grow pt-16 bg-varsal-darkblue">
         <PageHeader 

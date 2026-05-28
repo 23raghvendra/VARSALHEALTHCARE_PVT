@@ -5,6 +5,7 @@ import ProductsList from "@/components/sections/products/ProductsList";
 import OperationsSection from "@/components/sections/products/OperationsSection";
 import QualitySection from "@/components/sections/products/QualitySection";
 import bg_image from '@/Assets/Probanner/PHOTO-2025-05-04-14-41-59.jpg';
+import { BreadcrumbSchema } from "@/components/common/JsonLd";
 
 export const metadata = {
   title: 'Products',
@@ -22,8 +23,14 @@ export const metadata = {
 }
 
 export default function Products() {
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://varsalhealthcare.com' },
+    { name: 'Products', url: 'https://varsalhealthcare.com/products' }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <BreadcrumbSchema items={breadcrumbItems} />
       <Navbar />
       <div className="flex-grow pt-16">
         <PageHeader 

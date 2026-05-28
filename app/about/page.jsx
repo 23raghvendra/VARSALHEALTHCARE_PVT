@@ -2,6 +2,7 @@ import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
 import VisionSection from "@/components/sections/about/VisionSection";
 import ValuesSection from "@/components/sections/about/ValuesSection";
+import { BreadcrumbSchema } from "@/components/common/JsonLd";
 
 export const metadata = {
   title: 'About Us',
@@ -19,8 +20,14 @@ export const metadata = {
 }
 
 export default function About() {
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://varsalhealthcare.com' },
+    { name: 'About Us', url: 'https://varsalhealthcare.com/about' }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <BreadcrumbSchema items={breadcrumbItems} />
       <Navbar />
       <div className="flex-grow">
         <VisionSection />

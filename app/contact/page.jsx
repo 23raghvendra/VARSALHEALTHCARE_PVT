@@ -6,6 +6,7 @@ import ContactForm from "@/components/sections/contact/ContactForm";
 import Link from "next/link";
 import { ArrowRight, BriefcaseBusiness, Building2, CheckCircle2, Mail, PhoneCall, TrendingUp, Users, Zap } from "lucide-react";
 import contactBanner from "@/Assets/Contactus/lappy.jpg";
+import { BreadcrumbSchema } from "@/components/common/JsonLd";
 
 export const metadata = {
   title: 'Contact & Careers',
@@ -71,8 +72,14 @@ export default function Contact() {
     "Begin your journey with structured onboarding",
   ];
 
+  const breadcrumbItems = [
+    { name: 'Home', url: 'https://varsalhealthcare.com' },
+    { name: 'Contact', url: 'https://varsalhealthcare.com/contact' }
+  ];
+
   return (
     <div className="flex flex-col min-h-screen">
+      <BreadcrumbSchema items={breadcrumbItems} />
       <Navbar />
       <div className="flex-grow pt-16">
         <PageHeader
